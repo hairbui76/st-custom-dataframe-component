@@ -1,11 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import CustomDataFrame from "./CustomDataFrame";
 
 // Wrap your CustomDataFrame with the baseui them
-ReactDOM.render(
+const root = ReactDOM.createRoot(
+	document.getElementById("root") as HTMLElement
+);
+root.render(
 	<React.StrictMode>
 		<CustomDataFrame />
-	</React.StrictMode>,
-	document.getElementById("root")
+	</React.StrictMode>
 );
