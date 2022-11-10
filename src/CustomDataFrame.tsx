@@ -28,8 +28,10 @@ declare type CustomComponentProps = Partial<ComponentProps>;
 
 const CustomDataFrame = (props: CustomComponentProps) => {
 	let data: Data[] = [];
+	let header = "";
 	if (Object.keys(props).length > 0) {
 		data = props?.args?.data;
+		header = props?.args?.header;
 	}
 
 	useEffect(() => Streamlit.setFrameHeight());
@@ -51,14 +53,18 @@ const CustomDataFrame = (props: CustomComponentProps) => {
 					light: ["E53E3E", "FFFFFF"],
 				},
 			}}>
-			<CSVLink
-				data={`Comment:,${comment}\n${Object.keys(data[0]).join(",")}\n${data
-					.map((item) => Object.values(item).join(","))
-					.join("\n")}`}
-				target="_blank"
-				filename="data.csv">
-				<Button variant="outline">Download</Button>
-			</CSVLink>
+			<div style={{ display: "flex" }}>
+				<h2 style={{ alignSelf: "left", width: "100%" }}>{header}</h2>
+				<CSVLink
+					style={{ alignSelf: "right" }}
+					data={`Comment:,${comment}\n${Object.keys(data[0]).join(",")}\n${data
+						.map((item) => Object.values(item).join(","))
+						.join("\n")}`}
+					target="_blank"
+					filename={header}>
+					<Button variant="outline">Download</Button>
+				</CSVLink>
+			</div>
 			<Table highlightOnHover withBorder withColumnBorders>
 				<thead>
 					<tr>
