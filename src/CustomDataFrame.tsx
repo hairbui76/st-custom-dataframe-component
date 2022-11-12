@@ -54,7 +54,7 @@ const Th = function ({ children, icon, index, handleSortData }: ThProps) {
 			<UnstyledButton
 				onClick={() => handleSortData(children as keyof Data, index)}
 				style={{ width: "100%" }}>
-				<Group position="apart">
+				<Group style={{ display: "flex", flexDirection: "column", gap: "0px" }}>
 					<Text weight={900} size="sm">
 						{children}
 					</Text>
@@ -80,15 +80,15 @@ const CustomDataFrame = (props: CustomComponentProps) => {
 	useEffect(() => Streamlit.setFrameHeight());
 	useEffect(() => {
 		setSearchData(() => {
-			let arr = structuredClone(data);
-			return arr.filter((item) =>
-				Object.keys(arr[0]).some((key) => {
-					// @ts-ignore
+			let arr: Data[] = structuredClone(data);
+			return arr.filter((item: Data) =>
+				(Object.keys(arr[0]) as (keyof Data)[]).some((key) => {
 					if (typeof item[key] === "string") {
-						// @ts-ignore
-						return item[key].toLowerCase().includes(search.toLowerCase());
+						return (item[key] as string)
+							.toLowerCase()
+							.includes(search.toLowerCase());
 					}
-					return false;
+					return item[key] === parseFloat(search);
 				})
 			);
 		});
@@ -100,10 +100,17 @@ const CustomDataFrame = (props: CustomComponentProps) => {
 		setSearchData((prev) => {
 			let arr = structuredClone(prev);
 			if (icons[index] === true)
-				// @ts-ignore
-				arr.sort((a, b) => b[sortKey] - a[sortKey]);
-			// @ts-ignore
-			else arr.sort((a, b) => a[sortKey] - b[sortKey]);
+				arr.sort((a, b) => {
+					if (a[sortKey] < b[sortKey]) return -1;
+					if (a[sortKey] > b[sortKey]) return 1;
+					return 0;
+				});
+			else
+				arr.sort((a, b) => {
+					if (a[sortKey] > b[sortKey]) return -1;
+					if (a[sortKey] < b[sortKey]) return 1;
+					return 0;
+				});
 			return arr;
 		});
 		setIcon((prev) => [
