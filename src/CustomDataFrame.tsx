@@ -67,6 +67,11 @@ const Th = function ({ children, icon, index, handleSortData }: ThProps) {
   );
 };
 
+interface HeaderObj {
+  alert_type: string,
+  start: string,
+  end: string
+}
 const CustomDataFrame = (props: CustomComponentProps) => {
   const data: Data[] = useRef(props?.args?.data ? props.args.data : []).current;
   const [search, setSearch] = useState("");
@@ -130,15 +135,16 @@ const CustomDataFrame = (props: CustomComponentProps) => {
     ]);
   };
 
-  const renderHeaderString = (header: string): string => (
+  const renderHeaderString = (header: string): React.ReactNode => (
     header && header.length?<h2 style={{ alignSelf: "left", width: "100%" }}>{header}</h2>:""
   )
-  const renderHeaderObj = (header) => {
+  const renderHeaderObj = (header: HeaderObj) : React.ReactNode => {
     if (!header) {
       return "";
     }
+    console.log(header);
     return (<div>
-      <span className={"alert-type " + header.alert_type === "START"?"alert-start":"alert-stop"}>{header.alert_type}</span>
+      <span className={"alert-type " + (header.alert_type === "START"?"alert-start":"alert-stop")}>{header.alert_type}</span>
       <span className="alert-time start-time">{header.start}</span>
       <span className="alert-time stop-time">{header.end}</span>
     </div>)
