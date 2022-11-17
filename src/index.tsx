@@ -7,7 +7,7 @@ config();
 
 // Wrap your CustomDataFrame with the baseui them
 createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<CustomDataFrame />
-	</React.StrictMode>
+  <React.StrictMode>
+    <CustomDataFrame />
+  </React.StrictMode>
 );

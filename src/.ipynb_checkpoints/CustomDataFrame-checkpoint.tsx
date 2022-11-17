@@ -48,7 +48,6 @@ interface ThProps {
   index: number;
   handleSortData(key: keyof Data, index: number): void;
 }
-
 const severityColors = ['White', 'Pink', 'Red', 'Crimson'];
 const Th = function ({ children, icon, index, handleSortData }: ThProps) {
   return (
@@ -71,12 +70,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
   const data: Data[] = useRef(props?.args?.data ? props.args.data : []).current;
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState<Data[]>(data);
-  let header = props?.args?.header ? props.args.header : "";
-  try {
-    header = JSON.parse(header)
-  } catch (e) {
-    console.error("Header is string!")
-  }
+  const header = props?.args?.header ? props.args.header : "";
   const withSearch = props?.args?.withSearch;
   const withComment = props?.args?.withComment;
   const withDownload = props?.args?.withDownload;
@@ -130,20 +124,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
     ]);
   };
 
-  const renderHeaderString = (header: string): string => (
-    header && header.length?<h2 style={{ alignSelf: "left", width: "100%" }}>{header}</h2>:""
-  )
-  const renderHeaderObj = (header) => {
-    if (!header) {
-      return "";
-    }
-    return (<div>
-      <span className={"alert-type " + header.alert_type === "START"?"alert-start":"alert-stop"}>{header.alert_type}</span>
-      <span className="alert-time start-time">{header.start}</span>
-      <span className="alert-time stop-time">{header.end}</span>
-    </div>)
-  }
-
+  
   const rows = searchData.map((item, index) => (
     <tr key={index} className={severityColors[+item.Flag]}>
       {Object.values(item).map((value, _index) => (
@@ -162,8 +143,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
         fontSizes: '12px'
       }}>
       <div style={{ display: "flex", marginBottom: "10px" }}>
-        {typeof header === "string"?renderHeaderString(header):renderHeaderObj(header)}
-
+        {header && header.length?<h2 style={{ alignSelf: "left", width: "100%" }}>{header}</h2>:""}
         {withDownload?<CSVLink
           style={{ alignSelf: "right" }}
           data={`Comment:,${comment}\n${headerLists.join(",")}\n${searchData

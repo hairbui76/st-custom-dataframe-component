@@ -1,0 +1,20 @@
+tr.White td {
+  background: white;
+}
+tr.Pink td {
+  background: #fff0f0;
+}
+tr.Red td {
+  background: #ffcccc;
+}
+tr.Crimson td {
+  background: #ff4444;
+}
+.table-container {
+    max-height: 500px;
+    overflow: auto;
+    position: relative;
+}
+body {
+  margin: 0;
+}
