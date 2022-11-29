@@ -52,7 +52,7 @@ interface ThProps {
 const severityColors = ['White', 'Pink', 'Red', 'Crimson'];
 const Th = function ({ children, icon, index, handleSortData }: ThProps) {
   return (
-    <th key={index} style={children === "Flag"?{minWidth: '70px'}:{}}>
+    <th key={index} style={children === "Min" || children === "Max" || children === "Flag" ?{minWidth: '70px'}:{}}>
       <UnstyledButton
         onClick={() => handleSortData(children as keyof Data, index)}
         style={{ width: "100%" }}>
@@ -143,17 +143,17 @@ const CustomDataFrame = (props: CustomComponentProps) => {
       return "";
     }
     console.log(header);
-    return (<div>
+    return (<div style={{display: "flex"}}>
       <span className={"alert-type " + (header.alert_type === "START"?"alert-start":"alert-stop")}>{header.alert_type}</span>
-      <span className="alert-time start-time">{header.start}</span>
-      <span className="alert-time stop-time">{header.end}</span>
+      <div className="alert-time start-time"><div>{header.start}</div></div>
+      <div className="alert-time stop-time"><div>{header.end}</div></div>
     </div>)
   }
 
   const rows = searchData.map((item, index) => (
     <tr key={index} className={severityColors[+item.Flag]}>
       {Object.values(item).map((value, _index) => (
-        <td key={_index}>{value}</td>
+        <td key={_index}>{(_index === 1 || _index === 2)?value.toFixed(4):value}</td>
       ))}
     </tr>
   ));
@@ -199,7 +199,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
                 />
               </th>
             </tr>:""}
-            <tr style={{position: 'sticky', top: '0px', background: '#fff', boxShadow: '0px 1px 1px 0px #cec7c7'}}>
+            <tr style={{position: 'sticky', top: '0px', background: '#efefef', boxShadow: '0px 1px 1px 0px #cec7c7'}}>
               {headerLists.map((key, index) => (
                 <Th
                   index={index}

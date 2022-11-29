@@ -15,6 +15,49 @@ tr.Crimson td {
     overflow: auto;
     position: relative;
 }
+.alert-type {
+    /*font-size: 0.75em;*/
+    display: inline-block;
+    padding: 3px 5px 2px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px #ccc;
+    margin-right: 15px;
+    color: white;
+}
+.alert-start {
+    background-color: green;
+}
+.alert-stop {
+    background-color: blue;
+}
+.alert-time {
+    display: inline-flex;
+    align-items: center;
+}
+.alert-time div {
+    margin-right: 15px;
+    color: #fff;
+    font-weight: 600;
+    padding: 3px 5px 2px;
+}
+.start-time.alert-time div {
+    color: green;
+}
+.stop-time.alert-time div {
+    color: blue;
+}
+.alert-time:before {
+    background: #fff;
+    color: #888;
+    font-size: 0.75em;
+    margin-right: 2px;
+}
+.start-time.alert-time:before {
+    content: "begin:";
+}
+.stop-time.alert-time:before {
+    content: "end:";
+}
 body {
   margin: 0;
 }
