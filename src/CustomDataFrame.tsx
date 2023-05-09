@@ -138,6 +138,13 @@ const CustomDataFrame = (props: CustomComponentProps) => {
   const renderHeaderString = (header: string): React.ReactNode => (
     header && header.length?<h2 style={{ alignSelf: "left", width: "100%" }}>{header}</h2>:""
   )
+
+  const handleEvaluationChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchData((prev) => {
+      
+    })
+  }   
+
   const renderHeaderObj = (header: HeaderObj) : React.ReactNode => {
     if (!header) {
       return "";
@@ -152,9 +159,13 @@ const CustomDataFrame = (props: CustomComponentProps) => {
 
   const rows = searchData.map((item, index) => (
     <tr key={index} className={severityColors[+item.Flag]}>
-      {Object.values(item).map((value, _index) => (
-        <td key={_index}>{(_index === 1 || _index === 2)?value.toFixed(4):value}</td>
-      ))}
+      {Object.entries(item).map(([key, value], _index) => {
+        if (key === "Evaluation") return <td key={_index}>
+          <TextInput value={value} onChange={handleEvaluationChange} />
+        </td>
+        return <td key={_index}>{(_index === 1 || _index === 2)?value.toFixed(4):value}</td>
+      }
+      )}
     </tr>
   ));
 
@@ -189,7 +200,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
       />:""}
       <div className="table-container">
         <Table style={{borderSpacing: '0px', borderCollapse: "separate"}}>
-          <thead>
+          <thead style={{position: 'sticky', top: '0px'}}>
             {withComment?<tr>
               <th colSpan={headerLists.length} style={{border: 'none'}}>
                 <TextInput
@@ -199,7 +210,7 @@ const CustomDataFrame = (props: CustomComponentProps) => {
                 />
               </th>
             </tr>:""}
-            <tr style={{position: 'sticky', top: '0px', background: '#efefef', boxShadow: '0px 1px 1px 0px #cec7c7'}}>
+            <tr style={{background: '#efefef', boxShadow: '0px 1px 1px 0px #cec7c7'}}>
               {headerLists.map((key, index) => (
                 <Th
                   index={index}
