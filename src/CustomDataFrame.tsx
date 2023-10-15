@@ -27,6 +27,7 @@ interface Data {
 	Field: string;
 	Min: number;
 	Max: number;
+  TagNo: string;
 	Group: string;
 	Description: string;
 	Unit: string;
